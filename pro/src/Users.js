@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Post from './Post';
-import Request from './Request';
+import {data, hasError, isLoading, requestHandler} from './Request';
 import {Link} from 'react-router-dom';
 import {useParams} from 'react-router';
 
     const Users = () => {
-        const {data, hasError, isLoading, requestHandler} = Request();
+        const [data, setData] = useState(null);
+        const [hasError, setError] = useState(false);
+        const [isLoading, setLoading] = useState(false);
         const usersList = (data != null) ? data : [];
         const {userid} = useParams();
         useEffect(() => {
