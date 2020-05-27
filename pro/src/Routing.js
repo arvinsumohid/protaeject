@@ -16,9 +16,9 @@ import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
         <Router>
           <Switch>
             {routes.map((route) => (
-                <React.Fragment key={route.path}>
-                  <Route path={route.path} component={route.component} />
-                </React.Fragment>
+                // <React.Fragment >
+                  <Route key={route.path} path={route.path} component={route.component} />
+                // </React.Fragment>
               )
             )}
           </Switch>

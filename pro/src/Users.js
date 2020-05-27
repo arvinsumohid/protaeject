@@ -1,21 +1,33 @@
 import React, { useEffect, useState } from 'react';
 import Post from './Post';
-import {data, hasError, isLoading, requestHandler} from './Request';
 import {Link} from 'react-router-dom';
 import {useParams} from 'react-router';
 
     const Users = () => {
-        const [data, setData] = useState(null);
         const [hasError, setError] = useState(false);
         const [isLoading, setLoading] = useState(false);
-        const usersList = (data != null) ? data : [];
-        const {userid} = useParams();
+        const [users, setUsers] = useState(null);
+        let {userid} = useParams();
+
+        const fetchData = async q => {
+            if(q === undefined)
+                q = '';
+
+            const apiRes  = await fetch(`https://jsonplaceholder.typicode.com/users/${q}`);
+            const resJSON = await apiRes.json();
+            return resJSON;
+        }
         useEffect(() => {
-            if( userid !== undefined)
-                requestHandler(`https://jsonplaceholder.typicode.com/users/${userid}`);
-            else
-                requestHandler(`https://jsonplaceholder.typicode.com/users/`);
-        }, [userid]);
+            setLoading(true)
+            setError(false);
+
+            fetchData(userid).then(data => {
+                setUsers(data);
+                setLoading(false);
+            })
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+        }, []);
 
         const Loading = () => {
             return <h1>Loading..</h1>
@@ -46,8 +58,9 @@ import {useParams} from 'react-router';
             else
                 return <h1>Empty</h1>;
         }
-        if( usersList && !hasError && !isLoading ) 
-            return <Display users={usersList} />
+
+        if( users && !hasError && !isLoading ) 
+            return <Display users={users} />
         else if( hasError )
             return <Error />;
         else

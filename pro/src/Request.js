@@ -18,8 +18,6 @@ const Request = () => {
         .catch(() => setError(true))
         .finally(() => setLoading(false));
     }
-
-    return {data, hasError, isLoading, requestHandler};
 }
 
-export default Request;
+export {data, hasError, isLoading, requestHandler};

@@ -1,15 +1,28 @@
 import React, { useEffect, useState } from 'react';
-import Request, {data, hasError, isLoading, requestHandler} from './Request';
+// import Request, {data, hasError, isLoading, requestHandler} from './Request';
 import {useParams} from 'react-router';
 
 const Post = () => {
-    const [data, setData] = useState(null);
     const [hasError, setError] = useState(false);
     const [isLoading, setLoading] = useState(false);
-    const [post, setPost] = useState(null);
+    const [posts, setPosts] = useState(null);
     const {userid} = useParams();
     useEffect(() => {
-            requestHandler(`https://jsonplaceholder.typicode.com/posts?userId=${userid}`);
+        let url = `https://jsonplaceholder.typicode.com/posts?userId=${userid}`;
+        setLoading(true)
+        setError(false);
+
+        if( userid !== undefined)
+            url = `https://jsonplaceholder.typicode.com/posts?userId=${userid}`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            setPosts(data);
+            setLoading(false);
+        })
+        .catch(() => setError(true))
+        .finally(() => setLoading(false));
     }, [userid]);
 
     const Loading = () => {
@@ -20,10 +33,10 @@ const Post = () => {
         return <h1>Error</h1>
     }
 
-    if( post && !hasError && !isLoading ) 
+    if( posts && !hasError && !isLoading ) 
         return (
             <ul>
-                {post.map(post => {
+                {posts.map(post => {
                     return (<>
                         <div>
                             <h2>{post.title}</h2>
