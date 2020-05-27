@@ -29,13 +29,9 @@ import {useParams} from 'react-router';
             .finally(() => setLoading(false));
         }, []);
 
-        const Loading = () => {
-            return <h1>Loading..</h1>
-        }
+        const Loading = () => <h1>Loading..</h1>
 
-        const Error = () => {
-            return <h1>Error</h1>
-        }
+        const Error = () => <h1>Error</h1>
 
         const UserDetail = (props) => {
             return (
@@ -52,7 +48,13 @@ import {useParams} from 'react-router';
 
         const Display = (props) => {
             if(props.users.length > 0)
-                return ( props.users.map(user => <li><Link to={`/user/${user.id}`}>{user.name} {user.email}</Link></li>) )
+                return (
+                    props.users.map(user => (
+                        <li key={user.email}>
+                            <Link to={`/user/${user.id}`}>{user.name} {user.email}</Link>
+                        </li>
+                    ))
+                )
             else if ( props.users.id )
                 return <UserDetail userDetail={props.users} />
             else

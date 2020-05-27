@@ -6,7 +6,7 @@ import {BrowserRouter as Router,Route, Switch} from 'react-router-dom';
 
   function Routing() {
     const routes= [
-            {path:'/post/:postid', component: Post},
+            // {path:'/post/:postid', component: Post},
             {path:'/users', component: Users},
             {path:'/user/:userid', component: Users},
             {path:'/*', component: PageNotFound},
