@@ -1,0 +1,40 @@
+.clock {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #000;
+    border-radius: 50%;
+    position: relative;
+
+    &__hand {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        width: 1px;
+        transform-origin: bottom;
+
+        &--second {
+            height: 80px;
+            background-color: red;
+            z-index: 1;
+            transform: rotate(var(--rotate-second, 0deg));
+        }
+    
+        &--minute {
+            height: 90px;
+            background-color: #000;
+            transform: rotate(var(--rotate-minute, 0deg));
+        }
+    
+        &--hour {
+            height: 50px;
+            background-color: #000;
+            z-index: 2;
+            transform: rotate(var(--rotate-hour, 0deg));
+        }
+    }
+}
+
+.clock-digital {
+    width: 200px;
+    text-align: center;
+}
