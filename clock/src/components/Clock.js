@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './clock.scss'
 
 function Second(props) {
@@ -32,14 +32,17 @@ const Clock = () => {
         second: date.getSeconds()
     })    
 
-    setInterval(() => {
-        const d = new Date();
-        setTime({
-            hour : d.getHours(),
-            minute : d.getMinutes(),
-            second: d.getSeconds()
-        });
-    }, 1000);
+    useEffect(() => {
+        setInterval(() => {
+            const d = new Date();
+            setTime({
+                hour : d.getHours(),
+                minute : d.getMinutes(),
+                second: d.getSeconds()
+            });
+        }, 1000);
+
+    },[]);
 
     return (
         <>
